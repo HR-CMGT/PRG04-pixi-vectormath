@@ -37183,14 +37183,7 @@ class RightFish extends _pixiJs.Sprite {
      * 
      * Looks at difference between current position and mouse position
      * Calculates best route with vector math
-     */ update(delta, mouseposition) {
-        const direction = mouseposition.subtract(this.position).normalize();
-        const progress = direction.multiplyScalar(3);
-        this.position = this.position.add(progress);
-        const distance = mouseposition.subtract(this.position).magnitude();
-        if (distance > 4) this.angle = Math.atan2(direction.y, direction.x) * 180 / Math.PI + 180;
-        this.flipFish(direction.x, distance);
-    }
+     */ update(delta, mouseposition) {}
     /**
      * Flip Fish
      * @param directionX 
