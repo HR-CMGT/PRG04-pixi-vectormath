@@ -16,6 +16,11 @@ export class Game{
     rightFish : RightFish;
     sprites : PIXI.Sprite[];
 
+    /**
+     * Constructor
+     * 
+     * Creates Pixi
+     */
     constructor(){
         this.pixi = new PIXI.Application({ width: this.pixiWidth, height: this.pixiHeight });
         this.pixi.stage.interactive = true;
@@ -28,6 +33,12 @@ export class Game{
         this.loader.load(()=>this.loadCompleted());
     }
 
+    /**
+     * Load Completed
+     * 
+     * After textures are loaded
+     * Create sprites
+     */
     loadCompleted() {
         let water = new PIXI.Sprite(this.loader.resources["waterTexture"].texture!);
         water.height = this.pixiHeight;
@@ -47,6 +58,13 @@ export class Game{
         this.pixi.ticker.add((delta)=>this.update(delta));
     }
 
+    /**
+     * Update
+     * @param delta 
+     * 
+     * Updates sprites
+     * (Sprites need an update function)
+     */
     update(delta: number){
         for(let sprite of this.sprites){
             const mouseposition : PIXI.Point = this.pixi.renderer.plugins.interaction.mouse.global;

@@ -533,7 +533,11 @@ class Game {
     // settings
     pixiWidth = 800;
     pixiHeight = 450;
-    constructor(){
+    /**
+     * Constructor
+     * 
+     * Creates Pixi
+     */ constructor(){
         this.pixi = new _pixiJs.Application({
             width: this.pixiWidth,
             height: this.pixiHeight
@@ -546,7 +550,12 @@ class Game {
         this.loader.load(()=>this.loadCompleted()
         );
     }
-    loadCompleted() {
+    /**
+     * Load Completed
+     * 
+     * After textures are loaded
+     * Create sprites
+     */ loadCompleted() {
         let water = new _pixiJs.Sprite(this.loader.resources["waterTexture"].texture);
         water.height = this.pixiHeight;
         water.width = this.pixiWidth;
@@ -561,7 +570,13 @@ class Game {
         this.pixi.ticker.add((delta)=>this.update(delta)
         );
     }
-    update(delta) {
+    /**
+     * Update
+     * @param delta 
+     * 
+     * Updates sprites
+     * (Sprites need an update function)
+     */ update(delta) {
         for (let sprite of this.sprites){
             const mouseposition = this.pixi.renderer.plugins.interaction.mouse.global;
             sprite.update(delta, mouseposition);
@@ -37115,14 +37130,25 @@ parcelHelpers.defineInteropFlag(exports);
 );
 var _pixiJs = require("pixi.js");
 class WrongFish extends _pixiJs.Sprite {
-    constructor(texture){
+    /**
+     * Constructor
+     * @param texture 
+     * 
+     * Creates sprite & sets styling
+     */ constructor(texture){
         super(texture);
         this.tint = 16711680;
         this.anchor.set(0, 0.5);
         this.x = 100;
         this.y = 100;
     }
-    update(delta, mouseposition) {
+    /**
+     * Update
+     * @param delta 
+     * @param mouseposition 
+     * 
+     * Sets sprite position to current mouseposition
+     */ update(delta, mouseposition) {
         this.x = mouseposition.x;
         this.y = mouseposition.y;
     }
@@ -37138,14 +37164,26 @@ parcelHelpers.defineInteropFlag(exports);
 var _pixiJs = require("pixi.js");
 var _mathExtras = require("@pixi/math-extras");
 class RightFish extends _pixiJs.Sprite {
-    constructor(texture){
+    /**
+     * Constructor
+     * @param texture 
+     * 
+     * Creates sprite & sets styling
+     */ constructor(texture){
         super(texture);
         this.tint = 65280;
         this.anchor.set(0, 0.5);
         this.x = 300;
         this.y = 100;
     }
-    update(delta, mouseposition) {
+    /**
+     * Update
+     * @param delta 
+     * @param mouseposition 
+     * 
+     * Looks at difference between current position and mouse position
+     * Calculates best route with vector math
+     */ update(delta, mouseposition) {
         const direction = mouseposition.subtract(this.position).normalize();
         const progress = direction.multiplyScalar(3);
         this.position = this.position.add(progress);
@@ -37153,7 +37191,13 @@ class RightFish extends _pixiJs.Sprite {
         if (distance > 4) this.angle = Math.atan2(direction.y, direction.x) * 180 / Math.PI + 180;
         this.flipFish(direction.x, distance);
     }
-    flipFish(directionX, distance) {
+    /**
+     * Flip Fish
+     * @param directionX 
+     * @param distance 
+     * 
+     * Flips fish if needed
+     */ flipFish(directionX, distance) {
         let flipFish = directionX > 0 && distance > 4;
         if (flipFish) this.scale.set(1, -1);
         else this.scale.set(1, 1);
