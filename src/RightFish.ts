@@ -33,15 +33,7 @@ export class RightFish  extends PIXI.Sprite{
      * Calculates best route with vector math
      */
     update(delta: number, mouseposition : PIXI.Point){
-        const direction = mouseposition.subtract(this.position).normalize();
-        const progress = direction.multiplyScalar(3);
         
-        this.position = this.position.add(progress) as ObservablePoint;
-        
-        const distance = mouseposition.subtract(this.position).magnitude();
-        if(distance > 4) this.angle = (Math.atan2(direction.y, direction.x) * 180 / Math.PI) + 180;
-
-        this.flipFish(direction.x, distance);
     }
 
     /**
