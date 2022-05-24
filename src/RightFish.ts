@@ -15,7 +15,10 @@ export class RightFish  extends PIXI.Sprite{
     constructor(texture : PIXI.Texture){
         super(texture);
 
-        this.tint = 0x00FF00;
+        // this.tint = 0x00FF00;
+        const filter = new PIXI.filters.ColorMatrixFilter()
+        this.filters = [filter]
+        filter.hue(250, false) // Green/yellow
         this.anchor.set(0, 0.5);
         this.x = 300;
         this.y = 100;
@@ -30,7 +33,15 @@ export class RightFish  extends PIXI.Sprite{
      * Calculates best route with vector math
      */
     update(delta: number, mouseposition : PIXI.Point){
+        const direction = mouseposition.subtract(this.position).normalize();
+        const progress = direction.multiplyScalar(3);
         
+        this.position = this.position.add(progress) as ObservablePoint;
+        
+        const distance = mouseposition.subtract(this.position).magnitude();
+        if(distance > 4) this.angle = (Math.atan2(direction.y, direction.x) * 180 / Math.PI) + 180;
+
+        this.flipFish(direction.x, distance);
     }
 
     /**

@@ -37137,7 +37137,12 @@ class WrongFish extends _pixiJs.Sprite {
      * Creates sprite & sets styling
      */ constructor(texture){
         super(texture);
-        this.tint = 16711680;
+        const filter = new _pixiJs.filters.ColorMatrixFilter();
+        this.filters = [
+            filter
+        ];
+        filter.hue(100, false) // Pink/purple
+        ;
         this.anchor.set(0, 0.5);
         this.x = 100;
         this.y = 100;
@@ -37171,7 +37176,13 @@ class RightFish extends _pixiJs.Sprite {
      * Creates sprite & sets styling
      */ constructor(texture){
         super(texture);
-        this.tint = 65280;
+        // this.tint = 0x00FF00;
+        const filter = new _pixiJs.filters.ColorMatrixFilter();
+        this.filters = [
+            filter
+        ];
+        filter.hue(250, false) // Green/yellow
+        ;
         this.anchor.set(0, 0.5);
         this.x = 300;
         this.y = 100;
@@ -37183,7 +37194,14 @@ class RightFish extends _pixiJs.Sprite {
      * 
      * Looks at difference between current position and mouse position
      * Calculates best route with vector math
-     */ update(delta, mouseposition) {}
+     */ update(delta, mouseposition) {
+        const direction = mouseposition.subtract(this.position).normalize();
+        const progress = direction.multiplyScalar(3);
+        this.position = this.position.add(progress);
+        const distance = mouseposition.subtract(this.position).magnitude();
+        if (distance > 4) this.angle = Math.atan2(direction.y, direction.x) * 180 / Math.PI + 180;
+        this.flipFish(direction.x, distance);
+    }
     /**
      * Flip Fish
      * @param directionX 
