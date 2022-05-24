@@ -1,4 +1,6 @@
 # PRG04-pixi-vectormath
+
+[Uitgewerkte versie](https://github.com/HR-CMGT/PRG04-pixi-vectormath-completed)
  
 Aangezien we in dit project te maken hebben met een legacy dependency, run je geen 'npm install' zoals gewoonlijk, maar:
 
