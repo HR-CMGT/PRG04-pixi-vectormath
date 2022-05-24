@@ -6,8 +6,8 @@ import { WrongFish } from './WrongFish';
 
 export class Game{
     // settings
-    pixiWidth = 800;
-    pixiHeight = 450;
+    pixiWidth = window.innerWidth;
+    pixiHeight = window.innerHeight;
 
     // globals
     pixi : PIXI.Application;

@@ -531,8 +531,8 @@ var _rightFish = require("./RightFish");
 var _wrongFish = require("./WrongFish");
 class Game {
     // settings
-    pixiWidth = 800;
-    pixiHeight = 450;
+    pixiWidth = window.innerWidth;
+    pixiHeight = window.innerHeight;
     /**
      * Constructor
      * 
@@ -37169,6 +37169,8 @@ parcelHelpers.defineInteropFlag(exports);
 var _pixiJs = require("pixi.js");
 var _mathExtras = require("@pixi/math-extras");
 class RightFish extends _pixiJs.Sprite {
+    // sets the speed of the fish
+    speed = 5;
     /**
      * Constructor
      * @param texture 
@@ -37194,7 +37196,21 @@ class RightFish extends _pixiJs.Sprite {
      * 
      * Looks at difference between current position and mouse position
      * Calculates best route with vector math
-     */ update(delta, mouseposition) {}
+     */ update(delta, mouseposition) {
+        // normalize vector between fish and pointer
+        // sets magnitude (length) to 1
+        const direction = mouseposition.subtract(this.position).normalize();
+        // scalar multiplies normalized vector bij swimspeed
+        const progress = direction.multiplyScalar(this.speed);
+        // creates a new endpoint
+        this.position = this.position.add(progress);
+        // calculates new manitude (length) of vector
+        const distance = mouseposition.subtract(this.position).magnitude();
+        // calculates a value between -π and π for a correct angle
+        if (distance > 4) this.angle = Math.atan2(direction.y, direction.x) * 180 / Math.PI + 180;
+        // extra function to flip the sprite of the fish
+        this.flipFish(direction.x, distance);
+    }
     /**
      * Flip Fish
      * @param directionX 
